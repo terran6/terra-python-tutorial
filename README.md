@@ -1,0 +1,284 @@
+# Terra Software Development with Python
+
+The Terra Python Software Development Kit (SDK) is a library toolkit used for developing software that may interact with the Terra blockchain. In this tutorial, we will go over how you can install the Terra Python SDK, as well as any necessary dependencies, and how you can carry out various transactions utilizing this technology.
+
+## Installation
+
+The Terra Python SDK may be installed, preferably in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/), utilizing the following command:
+
+```shell
+pip install terra_sdk
+```
+
+Next, change directory into your new `terra.py` folder created by the install command above. You may then run the following commands to install all necessary dependencies:
+
+```shell
+pip install poetry
+poetry install
+```
+
+# Usage Examples
+
+The Terra Python SDK may be utilized to carry out a variety of transactions on the Terra blockchain. We will go over the following examples:
+
+- [Signing and Sending Transactions](#a-name1asigning-and-sending-transactions)
+
+- [Swapping Digital Currencies](#a-name2aswapping-digital-currencies)
+
+- [Interacting with Smart Contracts](#a-name3ainteracting-with-smart-contracts)
+
+For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found on the [LocalTerra Github Repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
+
+## Connecting to Your Wallet
+
+In order to conduct transactions on Terra, you will need to be able to send requests to the underlying blockchain. This may be done via instantiating an LCDClient which can be used to communicate to the corresponding Terra Lite Client Daemon (LCD) node.
+
+After you have instantiated your client to communicate with the appropriate network, you may initialize the wallet with which you would like to carry out transactions. On LocalTerra, you may pass in a name of a preconfigured testing wallet (test1-10), each of which contains more than adequate funds for testing purposes. On testnet or mainnet, you will need to pass in the mnemonic key associated with your wallet.
+
+<sub><span style="color:orange">**Warning:**</span> _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. Use your mnemonic key at your own disgretion._</sub>
+<br/>
+<br/>
+
+**LocalTerra**
+
+---
+
+```python
+from terra_sdk.client.localterra import LocalTerra
+
+# Create client to communicate with localterra.
+terra = LocalTerra()
+
+# Initialize preconfigured test wallet.
+wallet = terra.wallets["test1"]
+```
+
+**Testnet**
+
+---
+
+```python
+from terra_sdk.key.mnemonic import MnemonicKey
+from terra_sdk.client.lcd import LCDClient
+
+# Create client to communicate with testnet.
+terra = LCDClient(
+    url="https://bombay-lcd.terra.dev/",
+    chain_id="bombay-12"
+)
+
+# Initialize wallet with associated mnemonic key.
+mk = MnemonicKey(mnemonic="<INSERT MNEMONIC KEY HERE>")
+wallet = terra.wallet(mk)
+```
+
+**Mainnet**
+
+---
+
+```python
+from terra_sdk.key.mnemonic import MnemonicKey
+from terra_sdk.client.lcd import LCDClient
+
+# Create client to communicate with mainnet.
+terra = LCDClient(
+    url="https://lcd.terra.dev",
+    chain_id="columbus-5"
+)
+
+# Initialize wallet with associated mnemonic key.
+mk = MnemonicKey(mnemonic="<INSERT MNEMONIC KEY HERE>")
+wallet = terra.wallet(mk)
+```
+
+> ## Quick Note on Gas & Fees
+
+> All transactions that one can carry out on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified by units of something called `gas`.
+
+> Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Transaction fees are calculated by multiplying the specified gas amount by either a user specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
+
+> Each request we will make to the blockchain will contain a message detailing our transaction along with parameters which will help estimate the computational fee which will be charged. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not transate to any benefits for the signer.
+
+> ```python
+> import requests
+> import json
+>
+> # Request current gas rates for future fee estimation.
+> gas_price_dict = requests.get("https://fcd.terra.dev/v1/txs/gas_prices").json()
+> gas_price_dict
+> ```
+>
+> > ```
+> > {
+> >   "uluna": "0.01133",
+> >   "usdr": "0.104938",
+> >   "uusd": "0.15",
+> >   "ukrw": "170.0",
+> >   "umnt": "428.571",
+> >   "ueur": "0.125",
+> >   "ucny": "0.98",
+> >   "ujpy": "16.37",
+> >   "ugbp": "0.11",
+> >   "uinr": "10.88",
+> >   "ucad": "0.19",
+> >   "uchf": "0.14",
+> >   "uaud": "0.19",
+> >   "usgd": "0.2",
+> >   "uthb": "4.62",
+> >   "usek": "1.25",
+> >   "unok": "1.25",
+> >   "udkk": "0.9",
+> >   "uidr": "2180.0",
+> >   "uphp": "7.6",
+> >   "uhkd": "1.17",
+> >   "umyr": "0.6",
+> >   "utwd": "4.0"
+> > }
+> > ```
+>
+> <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is in millionths. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+
+## <a name=1></a>Signing and Sending Transactions
+
+After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing and finally sending the request to the node for execution. In this simple example, we will be sending 1 Luna, the native token of Terra, from our previously initialized wallet to another testing wallet. In this case, we decided to pay the fee associated with processing our trasaction with our TerraUSD (UST) assets, as specified in the `fee_denoms` parameter.
+
+```python
+from terra_sdk.client.lcd.api.tx import CreateTxOptions
+from terra_sdk.core.bank import MsgSend
+from terra_sdk.core import Coins, Coin
+
+# Initialize sender and recipient wallet addresses.
+sender_address = wallet.key.acc_address
+recipient_address = terra.wallets["test2"].key.acc_address
+
+# Set relevant parameters for transaction.
+tx_options = CreateTxOptions(
+    msgs=[
+        MsgSend(
+            from_address=sender_address,
+            to_address=recipient_address,
+            amount=Coins([Coin("uluna", 1000000)])
+        )
+    ],
+    gas="auto",
+    gas_prices=Coins(gas_price_dict),
+    fee_denoms="uusd",
+    gas_adjustment=1.5
+)
+
+# Create and sign transaction.
+tx = wallet.create_and_sign_tx(options=tx_options)
+
+# Broadcast the request for execution to the Terra node.
+result = terra.tx.broadcast(tx)
+```
+
+<sub>**Note on Gas Estimation:** In `CreateTxOptions`, the setting of the _gas_ parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The _gas_adjustment_ parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is too small. In order to ensure acceptance of our transaction, we have set this parameter to 1.5. You may experiment with different values to evaluate which works best for you.</sub>
+
+After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about our request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
+
+## <a name=2></a>Swapping Digital Currencies
+
+In the case that you would like to swap one of your Terra assets for another, you may broadcast a swap message to the Terra node. In this example, we utilize our previously initialized wallet, test1, to swap 1 Luna to UST and pay the transaction fee with our Terra Korean Won (KRT) asset.
+
+```python
+from terra_sdk.client.lcd.api.tx import CreateTxOptions
+from terra_sdk.core.market import MsgSwap
+from terra_sdk.core import Coins, Coin
+
+# Initialize trader wallet address.
+trader_address = wallet.key.acc_address
+
+# Set relevant parameters for transaction.
+tx_options = CreateTxOptions(
+    msgs=[
+        MsgSwap(
+            trader=trader_address,
+            offer_coin=Coin("uluna", 1000000),
+            ask_denom="uusd"
+        )
+    ],
+    gas="auto",
+    gas_prices=Coins(gas_price_dict),
+    fee_denoms="ukrw",
+    gas_adjustment=1.5
+)
+
+# Create and sign transaction.
+tx = wallet.create_and_sign_tx(options=tx_options)
+
+# Broadcast the request for execution to the Terra node.
+result = terra.tx.broadcast(tx)
+```
+
+### Swap and Send
+
+You may also swap and send funds to an address of your choice utilizing a swap and send message. In this case, we swap 1 Luna for UST and then send the resulting funds to another testing wallet.
+
+```python
+from terra_sdk.client.lcd.api.tx import CreateTxOptions
+from terra_sdk.core.market import MsgSwapSend
+from terra_sdk.core import Coins, Coin
+
+# Initialize sender and recipient wallet addresses.
+sender_address = wallet.key.acc_address
+recipient_address = terra.wallets["test2"].key.acc_address
+
+# Set relevant parameters for transaction.
+tx_options = CreateTxOptions(
+    msgs=[
+        MsgSwapSend(
+            from_address=sender_address,
+            to_address=recipient_address,
+            offer_coin=Coin("uluna", 1000000),
+            ask_denom="uusd"
+        )
+    ],
+    gas="auto",
+    gas_prices=Coins(gas_price_dict),
+    fee_denoms="ukrw",
+    gas_adjustment=1.5
+)
+
+# Create and sign transaction.
+tx = wallet.create_and_sign_tx(options=tx_options)
+
+# Broadcast the request for execution to the Terra node.
+result = terra.tx.broadcast(tx)
+```
+
+## <a name=3></a>Interacting with Smart Contracts
+
+In order to interact with a smart contract on Terra, you will have to either deploy your own smart contract on LocalTerra or utilize one of the many exceptional contracts on testnet or mainnet. In this example, we will deposit 1 UST into Anchor utilizing the Terra Python SDK on testnet. Anchor is a decentralized savings protocol which offers low-volatile yields on Terra stablecoin deposits. As of this writing, Anchor offers an APY of 19.55%. You may interact with Anchor by going to the [Anchor EARN page](https://app.anchorprotocol.com/earn).
+
+```python
+from terra_sdk.client.lcd.api.tx import CreateTxOptions
+from terra_sdk.core.wasm import MsgExecuteContract
+from terra_sdk.core import Coins, Coin
+
+# Initialize sender wallet and smart contract addresses.
+sender_address = wallet.key.acc_address
+anchor_contract_address = 'terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal'
+
+# Set relevant parameters for transactions.
+tx_options = CreateTxOptions(
+    msgs=[
+        MsgExecuteContract(
+            sender=sender_address,
+            contract=anchor_contract_address,
+            execute_msg={"deposit_stable": {}},
+            coins=Coins([Coin("uusd", 1000000)])
+        )
+    ],
+    gas="auto",
+    gas_prices=Coins(gas_price_dict),
+    fee_denoms="uusd",
+    gas_adjustment=1.5
+)
+
+# Create and sign transaction.
+tx = wallet.create_and_sign_tx(options=tx_options)
+
+# Broadcast the request for execution to the Terra node.
+result = terra.tx.broadcast(tx)
+```

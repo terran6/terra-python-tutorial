@@ -19,15 +19,17 @@ pip install poetry
 poetry install
 ```
 
+<br/>
+
 # Usage Examples
 
 The Terra Python SDK may be utilized to carry out a variety of transactions on the Terra blockchain. We will go over the following examples:
 
-- [Signing and Sending Transactions](#a-name1asigning-and-sending-transactions)
+- [Signing and Sending Transactions](#a-name"example-1"asigning-and-sending-transactions)
 
-- [Swapping Digital Currencies](#a-name2aswapping-digital-currencies)
+- [Swapping Digital Currencies](#a-name"example-2"aswapping-digital-currencies)
 
-- [Interacting with Smart Contracts](#a-name3ainteracting-with-smart-contracts)
+- [Interacting with Smart Contracts](#a-name"example-3"ainteracting-with-smart-contracts)
 
 For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found on the [LocalTerra Github Repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
 <br/>
@@ -89,6 +91,8 @@ mk = MnemonicKey(mnemonic="<INSERT MNEMONIC KEY HERE>")
 wallet = terra.wallet(mk)
 ```
 
+<br/>
+
 ## Quick Note on Gas & Fees
 
 All transactions that one can carry out on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified by units of something called `gas`.
@@ -138,7 +142,7 @@ gas_price_dict
 <br/>
 <br/>
 
-## <a name=1></a>Signing and Sending Transactions
+## <a name="Example-1"></a>Signing and Sending Transactions
 
 After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing and finally sending the request to the node for execution. In this simple example, we will be sending 1 Luna, the native token of Terra, from our previously initialized wallet to another testing wallet. In this case, we decided to pay the fee associated with processing our trasaction with our TerraUSD (UST) assets, as specified in the `fee_denoms` parameter.
 
@@ -179,7 +183,7 @@ After broadcasting the transaction to the Terra node, the `result` variable will
 <br/>
 <br/>
 
-## <a name=2></a>Swapping Digital Currencies
+## <a name="Example-2"></a>Swapping Digital Currencies
 
 In the case that you would like to swap one of your Terra assets for another, you may broadcast a swap message to the Terra node. In this example, we utilize our previously initialized wallet, test1, to swap 1 Luna to UST and pay the transaction fee with our Terra Korean Won (KRT) asset.
 
@@ -249,7 +253,9 @@ tx = wallet.create_and_sign_tx(options=tx_options)
 result = terra.tx.broadcast(tx)
 ```
 
-## <a name=3></a>Interacting with Smart Contracts
+<br/>
+
+## <a name="Example-3"></a>Interacting with Smart Contracts
 
 In order to interact with a smart contract on Terra, you will have to either deploy your own smart contract on LocalTerra or utilize one of the many exceptional contracts on testnet or mainnet. In this example, we will deposit 1 UST into Anchor utilizing the Terra Python SDK on testnet. Anchor is a decentralized savings protocol which offers low-volatile yields on Terra stablecoin deposits. As of this writing, Anchor offers an APY of 19.55%. You may interact with Anchor by going to the [Anchor EARN page](https://app.anchorprotocol.com/earn).
 

@@ -1,6 +1,8 @@
 # Terra Software Development with Python
 
 The Terra Python Software Development Kit (SDK) is a library toolkit used for developing software that may interact with the Terra blockchain. In this tutorial, we will go over how you can install the Terra Python SDK, as well as any necessary dependencies, and how you can carry out various transactions utilizing this technology.
+<br/>
+<br/>
 
 ## Installation
 
@@ -28,6 +30,8 @@ The Terra Python SDK may be utilized to carry out a variety of transactions on t
 - [Interacting with Smart Contracts](#a-name3ainteracting-with-smart-contracts)
 
 For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found on the [LocalTerra Github Repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
+<br/>
+<br/>
 
 ## Connecting to Your Wallet
 
@@ -41,8 +45,6 @@ After you have instantiated your client to communicate with the appropriate netw
 
 **LocalTerra**
 
----
-
 ```python
 from terra_sdk.client.localterra import LocalTerra
 
@@ -54,8 +56,6 @@ wallet = terra.wallets["test1"]
 ```
 
 **Testnet**
-
----
 
 ```python
 from terra_sdk.key.mnemonic import MnemonicKey
@@ -74,8 +74,6 @@ wallet = terra.wallet(mk)
 
 **Mainnet**
 
----
-
 ```python
 from terra_sdk.key.mnemonic import MnemonicKey
 from terra_sdk.client.lcd import LCDClient
@@ -91,52 +89,54 @@ mk = MnemonicKey(mnemonic="<INSERT MNEMONIC KEY HERE>")
 wallet = terra.wallet(mk)
 ```
 
-> ## Quick Note on Gas & Fees
+## Quick Note on Gas & Fees
 
-> All transactions that one can carry out on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified by units of something called `gas`.
+All transactions that one can carry out on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified by units of something called `gas`.
 
-> Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Transaction fees are calculated by multiplying the specified gas amount by either a user specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
+Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Transaction fees are calculated by multiplying the specified gas amount by either a user specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
 
-> Each request we will make to the blockchain will contain a message detailing our transaction along with parameters which will help estimate the computational fee which will be charged. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not transate to any benefits for the signer.
+Each request we will make to the blockchain will contain a message detailing our transaction along with parameters which will help estimate the computational fee which will be charged. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not transate to any benefits for the signer.
 
-> ```python
-> import requests
-> import json
->
-> # Request current gas rates for future fee estimation.
-> gas_price_dict = requests.get("https://fcd.terra.dev/v1/txs/gas_prices").json()
-> gas_price_dict
+```python
+import requests
+import json
+
+# Request current gas rates for future fee estimation.
+gas_price_dict = requests.get("https://fcd.terra.dev/v1/txs/gas_prices").json()
+gas_price_dict
+```
+
 > ```
->
-> > ```
-> > {
-> >   "uluna": "0.01133",
-> >   "usdr": "0.104938",
-> >   "uusd": "0.15",
-> >   "ukrw": "170.0",
-> >   "umnt": "428.571",
-> >   "ueur": "0.125",
-> >   "ucny": "0.98",
-> >   "ujpy": "16.37",
-> >   "ugbp": "0.11",
-> >   "uinr": "10.88",
-> >   "ucad": "0.19",
-> >   "uchf": "0.14",
-> >   "uaud": "0.19",
-> >   "usgd": "0.2",
-> >   "uthb": "4.62",
-> >   "usek": "1.25",
-> >   "unok": "1.25",
-> >   "udkk": "0.9",
-> >   "uidr": "2180.0",
-> >   "uphp": "7.6",
-> >   "uhkd": "1.17",
-> >   "umyr": "0.6",
-> >   "utwd": "4.0"
-> > }
-> > ```
->
-> <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is in millionths. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+> {
+>   "uluna": "0.01133",
+>   "usdr": "0.104938",
+>   "uusd": "0.15",
+>   "ukrw": "170.0",
+>   "umnt": "428.571",
+>   "ueur": "0.125",
+>   "ucny": "0.98",
+>   "ujpy": "16.37",
+>   "ugbp": "0.11",
+>   "uinr": "10.88",
+>   "ucad": "0.19",
+>   "uchf": "0.14",
+>   "uaud": "0.19",
+>   "usgd": "0.2",
+>   "uthb": "4.62",
+>   "usek": "1.25",
+>   "unok": "1.25",
+>   "udkk": "0.9",
+>   "uidr": "2180.0",
+>   "uphp": "7.6",
+>   "uhkd": "1.17",
+>   "umyr": "0.6",
+>   "utwd": "4.0"
+> }
+> ```
+
+<sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is in millionths. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+<br/>
+<br/>
 
 ## <a name=1></a>Signing and Sending Transactions
 
@@ -176,6 +176,8 @@ result = terra.tx.broadcast(tx)
 <sub>**Note on Gas Estimation:** In `CreateTxOptions`, the setting of the _gas_ parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The _gas_adjustment_ parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is too small. In order to ensure acceptance of our transaction, we have set this parameter to 1.5. You may experiment with different values to evaluate which works best for you.</sub>
 
 After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about our request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
+<br/>
+<br/>
 
 ## <a name=2></a>Swapping Digital Currencies
 

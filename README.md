@@ -12,7 +12,7 @@ The Terra Python SDK may be installed, preferably in a [virtual environment](htt
 pip install terra_sdk
 ```
 
-Next, change directory into your new `terra.py` folder created by the install command above. You may then run the following commands to install all necessary dependencies:
+Next, change directory into your new `terra.py` directory created by the install command above. You may then run the following commands to install all necessary dependencies:
 
 ```shell
 pip install poetry
@@ -25,13 +25,13 @@ poetry install
 
 The Terra Python SDK may be utilized to carry out a variety of transactions on the Terra blockchain. We will go over the following examples:
 
-- [Signing and Sending Transactions](#a-name"example-1"asigning-and-sending-transactions)
+1. [Signing and Sending Transactions](#signing-and-sending-transactions)
 
-- [Swapping Digital Currencies](#a-name"example-2"aswapping-digital-currencies)
+2. [Swapping Digital Currencies](#swapping-digital-currencies)
 
-- [Interacting with Smart Contracts](#a-name"example-3"ainteracting-with-smart-contracts)
+3. [Interacting with Smart Contracts](#interacting-with-smart-contracts)
 
-For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found on the [LocalTerra Github Repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
+For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found in the [LocalTerra Github repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
 <br/>
 <br/>
 
@@ -97,7 +97,7 @@ wallet = terra.wallet(mk)
 
 All transactions that one can carry out on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified by units of something called `gas`.
 
-Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Transaction fees are calculated by multiplying the specified gas amount by either a user specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
+Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Fees are calculated by multiplying the gas amount specified in the transaction by either a user specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
 
 Each request we will make to the blockchain will contain a message detailing our transaction along with parameters which will help estimate the computational fee which will be charged. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not transate to any benefits for the signer.
 
@@ -137,12 +137,12 @@ gas_price_dict
 >   "utwd": "4.0"
 > }
 > ```
+>
+> <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is given in millionths of the corresponding cryptocurrency asset. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+> <br/>
+> <br/>
 
-<sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is in millionths. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
-<br/>
-<br/>
-
-## <a name="Example-1"></a>Signing and Sending Transactions
+## Signing and Sending Transactions
 
 After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing and finally sending the request to the node for execution. In this simple example, we will be sending 1 Luna, the native token of Terra, from our previously initialized wallet to another testing wallet. In this case, we decided to pay the fee associated with processing our trasaction with our TerraUSD (UST) assets, as specified in the `fee_denoms` parameter.
 
@@ -177,9 +177,9 @@ tx = wallet.create_and_sign_tx(options=tx_options)
 result = terra.tx.broadcast(tx)
 ```
 
-<sub>**Note on Gas Estimation:** In `CreateTxOptions`, the setting of the _gas_ parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The _gas_adjustment_ parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is too small. In order to ensure acceptance of our transaction, we have set this parameter to 1.5. You may experiment with different values to evaluate which works best for you.</sub>
-
 After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about our request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
+
+<sub>**Note on Gas Estimation:** In `CreateTxOptions`, the setting of the _gas_ parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The _gas_adjustment_ parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is determined to be too small. In order to ensure acceptance of our transaction, we have decided to set this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you.</sub>
 <br/>
 <br/>
 

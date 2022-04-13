@@ -25,11 +25,15 @@ poetry install
 
 The Terra Python SDK may be utilized to carry out a variety of transactions on the Terra blockchain. We will go over the following examples:
 
-1. [Signing and Sending Transactions](#signing-and-sending-transactions)
+<div align="center">
 
-2. [Swapping Digital Currencies](#swapping-digital-currencies)
+[_Signing and Sending Transactions_](#signing-and-sending-transactions)
 
-3. [Interacting with Smart Contracts](#interacting-with-smart-contracts)
+[_Swapping Digital Currencies_](#swapping-digital-currencies)
+
+[_Interacting with Smart Contracts_](#interacting-with-smart-contracts)
+
+</div>
 
 For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found in the [LocalTerra Github repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
 <br/>
@@ -41,11 +45,11 @@ In order to conduct transactions on Terra, you will need to be able to send requ
 
 After you have instantiated your client to communicate with the appropriate network, you may initialize the wallet with which you would like to carry out transactions. On LocalTerra, you may pass in a name of a preconfigured testing wallet (test1-10), each of which contains more than adequate funds for testing purposes. On testnet or mainnet, you will need to pass in the mnemonic key associated with your wallet.
 
-<sub><span style="color:orange">**Warning:**</span> _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. Use your mnemonic key at your own disgretion._</sub>
+<sub>**Warning:** _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. Use your mnemonic key at your own disgretion._</sub>
 <br/>
 <br/>
 
-**LocalTerra**
+<ins>**LocalTerra**</ins>
 
 ```python
 from terra_sdk.client.localterra import LocalTerra
@@ -57,7 +61,7 @@ terra = LocalTerra()
 wallet = terra.wallets["test1"]
 ```
 
-**Testnet**
+<ins>**Testnet**</ins>
 
 ```python
 from terra_sdk.key.mnemonic import MnemonicKey
@@ -74,7 +78,7 @@ mk = MnemonicKey(mnemonic="<INSERT MNEMONIC KEY HERE>")
 wallet = terra.wallet(mk)
 ```
 
-**Mainnet**
+<ins>**Mainnet**</ins>
 
 ```python
 from terra_sdk.key.mnemonic import MnemonicKey
@@ -139,8 +143,9 @@ gas_price_dict
 > ```
 >
 > <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is given in millionths of the corresponding cryptocurrency asset. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
-> <br/>
-> <br/>
+
+<br/>
+<br/>
 
 ## Signing and Sending Transactions
 

@@ -45,7 +45,7 @@ In order to conduct transactions on Terra, you will need to be able to send requ
 
 After you have instantiated your client to communicate with the appropriate network, you may initialize the wallet with which you would like to carry out transactions. On LocalTerra, you may pass in a name of a preconfigured testing wallet (test1-10), each of which contains more than adequate funds for testing purposes. On testnet or mainnet, you will need to pass in the mnemonic key associated with your wallet.
 
-<sub>**Warning:** _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. Use your mnemonic key at your own disgretion._</sub>
+<sub>**Warning:** _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. You may create a wallet solely for testing purposes to eliminate risk. Use your mnemonic key at your own disgretion._</sub>
 <br/>
 <br/>
 
@@ -149,7 +149,7 @@ gas_price_dict
 
 ## Signing and Sending Transactions
 
-After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing and finally sending the request to the node for execution. In this simple example, we will be sending 1 Luna, the native token of Terra, from our previously initialized wallet to another testing wallet. In this case, we decided to pay the fee associated with processing our trasaction with our TerraUSD (UST) assets, as specified in the `fee_denoms` parameter.
+After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing and finally sending the request to the node for execution. In this simple example, we will be sending 1 Luna, the native token of Terra, from our previously initialized wallet to another testing wallet, test2. In this case, we decided to pay the fee associated with processing our trasaction with our TerraUSD (UST) assets, as specified in the `fee_denoms` parameter.
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions
@@ -184,13 +184,13 @@ result = terra.tx.broadcast(tx)
 
 After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about our request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
 
-<sub>**Note on Gas Estimation:** _In `CreateTxOptions`, the setting of the "gas" parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The "gas_adjustment" parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is determined to be too small. In order to ensure acceptance of our transaction, we have decided to set this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you._</sub>
+<sub>**Note on Gas Estimation:** _In `CreateTxOptions`, the setting of the "gas" parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The "gas_adjustment" parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the estimated value is determined to be too small. In order to ensure acceptance of our transaction, we have decided to set this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you._</sub>
 <br/>
 <br/>
 
 ## Swapping Digital Currencies
 
-In the case that you would like to swap one of your Terra assets for another, you may broadcast a swap message to the Terra node. In this example, we utilize our previously initialized wallet, test1, to swap 1 Luna to UST and pay the transaction fee with our Terra Korean Won (KRT) asset.
+In the case that you would like to swap one of your Terra assets for another, you may broadcast a swap message to the Terra node. In this example, we utilize our previously initialized wallet, test1, to swap 1 Luna to UST. We also specify that we will pay the transaction fee with our TerraKRW (KRT) assets.
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions

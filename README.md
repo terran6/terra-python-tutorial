@@ -6,13 +6,13 @@ The Terra Python Software Development Kit (SDK) is a library toolkit used for de
 
 ## Installation
 
-The Terra Python SDK may be installed, preferably in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/), utilizing the following command:
+The Terra Python SDK may be installed, preferably in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/), by running the following command in your terminal:
 
 ```shell
 pip install terra_sdk
 ```
 
-Next, change directory into your new `terra.py` directory created by the install command above. You may then run the following commands to install all necessary dependencies:
+Next, change directory into your new `terra.py` directory created by the install command above. You may then run the following commands in your terminal to install all necessary dependencies:
 
 ```shell
 pip install poetry

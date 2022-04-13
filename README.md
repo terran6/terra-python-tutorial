@@ -184,7 +184,7 @@ result = terra.tx.broadcast(tx)
 
 After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about our request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
 
-<sub>**Note on Gas Estimation:** In `CreateTxOptions`, the setting of the _gas_ parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The _gas_adjustment_ parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is determined to be too small. In order to ensure acceptance of our transaction, we have decided to set this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you.</sub>
+<sub>**Note on Gas Estimation:** _In `CreateTxOptions`, the setting of the "gas" parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The "gas_adjustment" parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the value is determined to be too small. In order to ensure acceptance of our transaction, we have decided to set this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you._</sub>
 <br/>
 <br/>
 
@@ -271,7 +271,7 @@ from terra_sdk.core import Coins, Coin
 
 # Initialize sender wallet and smart contract addresses.
 sender_address = wallet.key.acc_address
-anchor_contract_address = 'terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal'
+anchor_contract_address = "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal"
 
 # Set relevant parameters for transactions.
 tx_options = CreateTxOptions(

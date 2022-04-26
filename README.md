@@ -1,18 +1,18 @@
 # Terra Software Development with Python
 
-The Terra Python Software Development Kit (SDK) is a library toolkit used for developing software that may interact with the Terra blockchain. In this tutorial, we will go over how you can install the Terra Python SDK, as well as any necessary dependencies, and how you can carry out various transactions utilizing this technology.
+The Terra Python Software Development Kit (SDK) is a library toolkit used for developing software for interacting with the Terra blockchain. In this tutorial, you will learn how you can install the Terra Python SDK, as well as any necessary dependencies, and how you can carry out various transactions utilizing this technology.
 <br/>
 <br/>
 
 ## Installation
 
-The Terra Python SDK may be installed, preferably in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/), by running the following command in your terminal:
+1. The Terra Python SDK may be installed, preferably in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/), by running the following command in your terminal:
 
 ```shell
 pip install terra_sdk
 ```
 
-Next, change directory into your new `terra.py` directory created by the install command above. You may then run the following commands in your terminal to install all necessary dependencies:
+2. Run the following commands to enter your new directory and to install all necessary dependencies:
 
 ```shell
 pip install poetry
@@ -23,7 +23,7 @@ poetry install
 
 # Usage Examples
 
-The Terra Python SDK may be utilized to carry out a variety of transactions on the Terra blockchain. We will go over the following examples:
+The Terra Python SDK can be used to carry out a variety of transactions on the Terra blockchain. This tutorial covers the following examples:
 
 <div align="center">
 
@@ -38,7 +38,7 @@ The Terra Python SDK may be utilized to carry out a variety of transactions on t
 
 ## LocalTerra for Development & Testing
 
-For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found in the [LocalTerra Github repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
+For testing your transactions, it is recommended that you install and run LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found in the [LocalTerra Github repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
 <br/>
 <br/>
 
@@ -102,11 +102,11 @@ wallet = terra.wallet(mk)
 
 ## Quick Note on Gas & Fees
 
-All transactions that one can carry out on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified by units of something called `gas`.
+All transactions on the blockchain will require some effort from computational resources in order to be processed and accepted. The computational work expended due to processing a transaction is quantified in units of `gas`.
 
-Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Fees are calculated by multiplying the gas amount specified in the transaction by either a user specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
+Because the amount of gas needed may not be predetermined, the signer of the transaction must send the amount of gas that they would like to use along with the transaction. Fees are calculated by multiplying the gas amount specified in the transaction by either a user-specified price or by utilizing preset prices for each unit of gas. Current rates per unit of gas may be viewed on the [gas rates FCD page](https://fcd.terra.dev/v1/txs/gas_prices).
 
-Each request we will make to the blockchain will contain a message detailing our transaction along with parameters which will help estimate the computational fee which will be charged. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not transate to any benefits for the signer.
+Each request you will make to the blockchain will contain a message detailing your transaction along with parameters that will help estimate the gas fee. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not translate to any benefits for the signer.
 
 ```python
 import requests
@@ -145,14 +145,14 @@ gas_price_dict
 > }
 > ```
 >
-> <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is given in millionths of the corresponding cryptocurrency asset. Furthermore, each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+> <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is given in millionths of the corresponding cryptocurrency asset. Each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
 
 <br/>
 <br/>
 
 ## Signing and Sending Transactions
 
-After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing and finally sending the request to the node for execution. In this simple example, we will be sending 1 Luna, the native token of Terra, from our previously initialized wallet to another testing wallet, test2. In this case, we decided to pay the fee associated with processing our trasaction with our TerraUSD (UST) assets, as specified in the `fee_denoms` parameter.
+After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing, and finally sending the request to the node for execution. In this example, you will be sending 1 Luna from your previously initialized wallet to another testing wallet, test2. For this example, fees will be paid in TerraUSD (UST), as specified in the `fee_denoms` parameter.
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions
@@ -185,15 +185,15 @@ tx = wallet.create_and_sign_tx(options=tx_options)
 result = terra.tx.broadcast(tx)
 ```
 
-After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about our request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
+After broadcasting the transaction to the Terra node, the `result` variable will hold all relevant information about your request, including if it was successfully completed or not. In the Jupyter Notebook files in this repository, you may utilize a helper function which will neatly present this information for you.
 
-<sub>**Note on Gas Estimation:** _In `CreateTxOptions`, the setting of the "gas" parameter to "auto" estimates the amount of gas that may be needed for processing the transaction. The "gas_adjustment" parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the estimated value is determined to be too small. In order to ensure acceptance of our transaction, we have decided to set this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you._</sub>
+<sub>**Note on Gas Estimation:** _In `CreateTxOptions`, the setting of the `gas` parameter to `auto` estimates the amount of gas that may be needed for processing the transaction. The `gas_adjustment` parameter allows for this value to be increased in order to meet the minimum gas requirement for processing if the estimated value is determined to be too small. In order to ensure acceptance of your transaction, this example sets this parameter to a value of 1.5. You may experiment with different parameter values to evaluate which configuration is best for you._</sub>
 <br/>
 <br/>
 
 ## Swapping Digital Currencies
 
-In the case that you would like to swap one of your Terra assets for another, you may broadcast a swap message to the Terra node. In this example, we utilize our previously initialized wallet, test1, to swap 1 Luna to UST. We also specify that we will pay the transaction fee with our TerraKRW (KRT) assets.
+If you would like to swap one of your Terra assets for another, you may broadcast a swap message to the Terra node. In this example, you will utilize your previously initialized wallet, test1, to swap 1 Luna to UST. You also specify that you will pay the transaction fee with your TerraKRW (KRT) assets.
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions
@@ -227,7 +227,7 @@ result = terra.tx.broadcast(tx)
 
 ### Swap and Send
 
-You may also swap and send funds to an address of your choice utilizing a swap and send message. In this case, we swap 1 Luna for UST and then send the resulting funds to another testing wallet.
+You may also swap and send funds to an address of your choice utilizing a swap and send message. In this example, you will swap 1 Luna for UST and then send the resulting funds to another testing wallet.
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions
@@ -265,7 +265,7 @@ result = terra.tx.broadcast(tx)
 
 ## Interacting with Smart Contracts
 
-In order to interact with a smart contract on Terra, you will have to either deploy your own smart contract on LocalTerra or utilize one of the many exceptional contracts on testnet or mainnet. In this example, we will deposit 1 UST into Anchor utilizing the Terra Python SDK on testnet. Anchor is a decentralized savings protocol which offers low-volatile yields on Terra stablecoin deposits. As of this writing, Anchor offers an APY of 19.55%. You may interact with Anchor by going to the [Anchor EARN page](https://app.anchorprotocol.com/earn).
+In order to interact with a smart contract on Terra, you will have to either deploy your own smart contract on LocalTerra or utilize one of the many exceptional contracts available on the testnet or mainnet. In this example, you will deposit 1 UST into Anchor utilizing the Terra Python SDK on the testnet. Anchor is a decentralized savings protocol that offers low-volatile yields on Terra stablecoin deposits. You may interact with Anchor by going to the [Anchor EARN page](https://app.anchorprotocol.com/earn).
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions

@@ -12,7 +12,7 @@ The Terra Python Software Development Kit (SDK) is a library toolkit used for de
 pip install terra_sdk
 ```
 
-2. Run the following commands to enter your new directory and to install all necessary dependencies:
+2. Run the following commands to enter your new directory and install all necessary dependencies:
 
 ```sh
 cd terra.py

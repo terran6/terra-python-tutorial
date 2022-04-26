@@ -34,6 +34,9 @@ The Terra Python SDK may be utilized to carry out a variety of transactions on t
 [_Interacting with Smart Contracts_](#interacting-with-smart-contracts)
 
 </div>
+<br/>
+
+## LocalTerra for Development & Testing
 
 For testing your transactions, we recommend installing and running LocalTerra on your personal computer. Instructions on how to get LocalTerra up and running may be found in the [LocalTerra Github repository](https://github.com/terra-money/LocalTerra). If you would rather test on a network similar to `mainnet`, the live Terra blockchain, then you may utilize `testnet`. However, you will be limited on the number of transactions that you may make per day. This is to protect computing resources from scripts that may spam the network. Once you are comfortable enough to make transactions on the live Terra blockchain, you may utilize `mainnet` to carry out transactions with your own assets.
 <br/>
@@ -44,8 +47,6 @@ For testing your transactions, we recommend installing and running LocalTerra on
 In order to conduct transactions on Terra, you will need to be able to send requests to the underlying blockchain. This may be done via instantiating an LCDClient which can be used to communicate to the corresponding Terra Lite Client Daemon (LCD) node.
 
 After you have instantiated your client to communicate with the appropriate network, you may initialize the wallet with which you would like to carry out transactions. On LocalTerra, you may pass in a name of a preconfigured testing wallet (test1-10), each of which contains more than adequate funds for testing purposes. On testnet or mainnet, you will need to pass in the mnemonic key associated with your wallet.
-
-<sub>**Warning:** _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. You may create a wallet solely for testing purposes to eliminate risk. Use your mnemonic key at your own disgretion._</sub>
 <br/>
 <br/>
 
@@ -94,6 +95,8 @@ terra = LCDClient(
 mk = MnemonicKey(mnemonic="<INSERT MNEMONIC KEY HERE>")
 wallet = terra.wallet(mk)
 ```
+
+<sub>**Warning:** _Carrying out transactions on testnet or mainnet require the use of your personal seed phrase or mnemonic key. This is an unencrypted private key that is generated and presented to you upon the creation of your personal wallet. Saving or utilizing this phrase on your personal computer may expose this private key to malicious actors who could gain access to your personal wallet if they are able to obtain it. You may create a wallet solely for testing purposes to eliminate risk. Use your mnemonic key at your own disgretion._</sub>
 
 <br/>
 

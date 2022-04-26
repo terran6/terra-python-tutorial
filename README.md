@@ -15,6 +15,7 @@ pip install terra_sdk
 2. Run the following commands to enter your new directory and to install all necessary dependencies:
 
 ```shell
+cd terra.py
 pip install poetry
 poetry install
 ```

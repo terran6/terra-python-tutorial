@@ -8,6 +8,8 @@ The Terra Python Software Development Kit (SDK) is a library toolkit used for de
 
 The Terra Python SDK requires <a href="https://www.python.org/downloads/">Python v3.7+</a>.
 
+<br/>
+
 ## Installation
 
 1. The Terra Python SDK may be installed, preferably in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/), by running the following command in your terminal:

@@ -18,9 +18,11 @@ The Terra Python SDK requires <a href="https://www.python.org/downloads/">Python
 pip install -U terra_sdk
 ```
 
-2. Run the following commands to enter your new directory and install all necessary dependencies:
+2. Run the following commands to clone the `terra.py` repository, enter the new directory and install all necessary dependencies:
 
 ```sh
+git clone https://github.com/terra-money/terra.py.git
+cd terra.py
 pip install poetry
 poetry install
 ```

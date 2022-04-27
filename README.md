@@ -21,7 +21,7 @@ pip install -U terra_sdk
 2. Run the following commands to clone the `terra.py` repository, enter the new directory and install all necessary dependencies:
 
 ```sh
-git clone https://github.com/terra-money/terra.py.git
+git clone --depth 1 https://github.com/terra-money/terra.py.git
 cd terra.py
 pip install poetry
 poetry install

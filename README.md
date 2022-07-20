@@ -32,17 +32,8 @@ poetry install
 
 # Usage Examples
 
-The Terra Python SDK can be used to carry out a variety of transactions on the Terra blockchain. This tutorial covers the following examples:
+The Terra Python SDK can be used to carry out a variety of transactions on the Terra blockchain. This tutorial covers how to sign and send transactions.
 
-<div align="center">
-
-[_Signing and Sending Transactions_](#signing-and-sending-transactions)
-
-[_Swapping Digital Currencies_](#swapping-digital-currencies)
-
-[_Interacting with Smart Contracts_](#interacting-with-smart-contracts)
-
-</div>
 <br/>
 
 ## LocalTerra for Development & Testing

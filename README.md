@@ -24,6 +24,7 @@ pip install -U terra_sdk
 git clone --depth 1 https://github.com/terra-money/terra.py.git
 cd terra.py
 pip install poetry
+poetry update
 poetry install
 ```
 
@@ -121,39 +122,17 @@ import requests
 import json
 
 # Request current gas rates for future fee estimation.
-gas_price_dict = requests.get("https://fcd.terra.dev/v1/txs/gas_prices").json()
+gas_price_dict = requests.get("https://pisco-api.terra.dev/gas-prices").json()
 gas_price_dict
 ```
 
 > ```
 > {
->   "uluna": "0.01133",
->   "usdr": "0.104938",
->   "uusd": "0.15",
->   "ukrw": "170.0",
->   "umnt": "428.571",
->   "ueur": "0.125",
->   "ucny": "0.98",
->   "ujpy": "16.37",
->   "ugbp": "0.11",
->   "uinr": "10.88",
->   "ucad": "0.19",
->   "uchf": "0.14",
->   "uaud": "0.19",
->   "usgd": "0.2",
->   "uthb": "4.62",
->   "usek": "1.25",
->   "unok": "1.25",
->   "udkk": "0.9",
->   "uidr": "2180.0",
->   "uphp": "7.6",
->   "uhkd": "1.17",
->   "umyr": "0.6",
->   "utwd": "4.0"
+>   "uluna": "0.15",
 > }
 > ```
 >
-> <sub>**Note:** _The "u" preceding the name of each currency is the unit symbol for micro. This means that each price is given in millionths of the corresponding cryptocurrency asset. Each currency name refers to its corresponding Terra token. For example, the "uusd": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+> <sub>**Note:** _The "u" preceding the name of the native token is the unit symbol for micro. This means that the price is given in millionths of the corresponding cryptocurrency asset. For example, the "uluna": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
 
 <br/>
 <br/>

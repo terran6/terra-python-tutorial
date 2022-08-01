@@ -113,7 +113,7 @@ import requests
 import json
 
 # Request current gas rates for future fee estimation.
-gas_price_dict = requests.get("https://pisco-api.terra.dev/gas-prices").json()
+gas_price_dict = requests.get("https://pisco-fcd.terra.dev/v1/txs/gas_prices").json()
 gas_price_dict
 ```
 

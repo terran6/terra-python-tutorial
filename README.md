@@ -108,12 +108,25 @@ Because the amount of gas needed may not be predetermined, the signer of the tra
 
 Each request you will make to the blockchain will contain a message detailing your transaction along with parameters that will help estimate the gas fee. The estimated fee must be above the minimum fee required to process the request for the transaction to be accepted. If the fee is too small to fully complete the request, you may still be responsible for charges on the processing that was carried out before the transaction failed. Gas that is left unused after the transaction will not be refunded and larger estimated fee values will not translate to any benefits for the signer.
 
+<ins>**Testnet**</ins>
+
 ```python
 import requests
 import json
 
-# Request current gas rates for future fee estimation.
+# Request current gas rates on testnet for future fee estimation.
 gas_price_dict = requests.get("https://pisco-fcd.terra.dev/v1/txs/gas_prices").json()
+gas_price_dict
+```
+
+<ins>**Mainnet**</ins>
+
+```python
+import requests
+import json
+
+# Request current gas rates on mainnet for future fee estimation.
+gas_price_dict = requests.get("https://phoenix-fcd.terra.dev/v1/txs/gas_prices").json()
 gas_price_dict
 ```
 

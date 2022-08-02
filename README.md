@@ -73,7 +73,7 @@ from terra_sdk.client.lcd import LCDClient
 # Create client to communicate with testnet.
 terra = LCDClient(
     url="https://pisco-lcd.terra.dev/",
-    chain_id="bombay-12"
+    chain_id="pisco-1"
 )
 
 # Initialize wallet with associated mnemonic key.
@@ -89,8 +89,8 @@ from terra_sdk.client.lcd import LCDClient
 
 # Create client to communicate with mainnet.
 terra = LCDClient(
-    url="https://lcd.terra.dev",
-    chain_id="columbus-5"
+    url="https://phoenix-lcd.terra.dev",
+    chain_id="phoenix-1"
 )
 
 # Initialize wallet with associated mnemonic key.

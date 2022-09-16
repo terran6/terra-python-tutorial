@@ -136,14 +136,14 @@ gas_price_dict
 > }
 > ```
 >
-> <sub>**Note:** _The "u" preceding the name of the native token is the unit symbol for micro. This means that the price is given in millionths of the corresponding cryptocurrency asset. For example, the "uluna": "0.15" entry corresponds to a 0.00000015 UST cost for each unit of gas expended per transaction._</sub>
+> <sub>**Note:** _The "u" preceding the name of the native token is the unit symbol for micro. This means that the price is given in millionths of the corresponding cryptocurrency asset. For example, the "uluna": "0.15" entry corresponds to a 0.00000015 LUNA cost for each unit of gas expended per transaction._</sub>
 
 <br/>
 <br/>
 
 ## Signing and Sending Transactions
 
-After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing, and finally sending the request to the node for execution. In this example, you will be sending 1 Luna from your previously initialized wallet to another testing wallet, test2. For this example, fees will be paid in TerraUSD (UST), as specified in the `fee_denoms` parameter.
+After initializing your LCDClient and wallet, you may try to carry out a simple transfer of funds. This involves initializing the addresses of your sender and receiver wallets, setting the relevant parameters to carry out the transaction, and creating, signing, and finally sending the request to the node for execution. In this example, you will be sending 1 Luna from your previously initialized wallet to another testing wallet, test2.
 
 ```python
 from terra_sdk.client.lcd.api.tx import CreateTxOptions
@@ -165,7 +165,6 @@ tx_options = CreateTxOptions(
     ],
     gas="auto",
     gas_prices=Coins(gas_price_dict),
-    fee_denoms="uusd",
     gas_adjustment=1.5
 )
 

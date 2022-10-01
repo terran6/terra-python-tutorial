@@ -136,7 +136,7 @@ gas_price_dict
 > }
 > ```
 >
-> <sub>**Note:** _The "u" preceding the name of the native token is the unit symbol for micro. This means that the price is given in millionths of the corresponding cryptocurrency asset. For example, the "uluna": "0.15" entry corresponds to a 0.00000015 LUNA cost for each unit of gas expended per transaction._</sub>
+> <sub>**Note:** _The "u" preceding the name of Terra's native token, Luna, is the unit symbol for micro. This means that the price is given in millionths of the corresponding cryptocurrency asset. For example, the "uluna": "0.15" entry corresponds to a 0.00000015 LUNA cost for each unit of gas expended per transaction._</sub>
 
 <br/>
 <br/>
